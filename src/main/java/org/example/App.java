@@ -15,8 +15,8 @@ public class App
     static int turn = 0;
     static int shot = 1;
     static String actual = null;
-
-    static int actualTurns = 0;
+    static int attemptCount=1;
+    static Boolean changeTurn = false;
     public static void main( String[] args )
     {
         BufferedReader reader;
@@ -50,20 +50,31 @@ public class App
             turn = 1;
             actual = name;
         }
-        key = name + "-" + turn + "-" + shot;
-        if(actual.equals(name) && points <10){
-            actualTurns++;
-        }else{
-            actualTurns = 2;
-        }
-        if(actual.equals(name) && actualTurns==2){
+        if(actual.equals(name) && changeTurn){
             turn++;
+            shot =1;
+            changeTurn = false;
+            attemptCount = 0;
         }
-        if(points==10){
-            shot = 1;
+
+        key = name + "-" + turn + "-" + shot;
+        scoreMap.put(key, points);
+
+        if(actual.equals(name) && points < 10){
+            attemptCount++;
         }else{
+            attemptCount= 2;
+        }
+
+        if(actual.equals(name) && attemptCount==2){
+            changeTurn = true;
+        }
+        if(points<10){
             shot++;
         }
-        scoreMap.put(key, points);
+        if(shot>=3 && turn<9){
+            shot=1;
+        }
+
     }
 }
