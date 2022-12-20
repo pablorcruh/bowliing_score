@@ -20,6 +20,7 @@ public class App
     static int attemptCount=1;
     static Boolean changeTurn = false;
     static Boolean firstTurn = true;
+
     public static void main( String[] args )
     {
         BufferedReader reader;
@@ -54,12 +55,16 @@ public class App
             firstPlayer = name;
         }
 
+
         if(firstPlayer.equals(name) && changeTurn){
-            turn++;
+            if(turn < 10){
+                turn++;
+            }
             shot =1;
             changeTurn = false;
             attemptCount = 0;
             firstTurn = false;
+
         }
         if(firstTurn){
             playersList.add(name);
@@ -74,18 +79,21 @@ public class App
             attemptCount= 2;
         }
 
-        if(firstPlayer.equals(name) && attemptCount==2){
+        if(firstPlayer.equals(name) && attemptCount==2 && turn < 10){
             changeTurn = true;
         }
-        if(points==10){
+
+        if(points==10 && turn < 10){
             shot=1;
         }else{
             shot++;
         }
-        if(shot>=3 && turn<9){
+        if(shot>=3 && turn<10){
             shot=1;
         }
-
+        if(shot > 3 && turn >9){
+            shot = 1;
+        }
 
     }
 }
