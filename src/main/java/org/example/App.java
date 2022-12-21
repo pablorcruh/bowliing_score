@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.domain.LastSlot;
+import org.example.domain.RegularSlot;
+import org.example.domain.ScoreBoardRow;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,9 +34,10 @@ public class App
             while (line != null) {
                 //System.out.println(line);
                 fillScoreMap(line);
-                // read next line
                 line = reader.readLine();
+
             }
+            List<ScoreBoardRow> result = fillScoreBoardRow(scoreMap, playersList);
 
             reader.close();
         } catch (IOException e) {
@@ -54,8 +59,6 @@ public class App
             turn = 1;
             firstPlayer = name;
         }
-
-
         if(firstPlayer.equals(name) && changeTurn){
             if(turn < 10){
                 turn++;
@@ -66,6 +69,7 @@ public class App
             firstTurn = false;
 
         }
+
         if(firstTurn){
             playersList.add(name);
         }
@@ -94,6 +98,37 @@ public class App
         if(shot > 3 && turn >9){
             shot = 1;
         }
-
     }
+
+    public static List<ScoreBoardRow> fillScoreBoardRow(HashMap<String,Integer> scoreHashMap, Set<String> players){
+        List<ScoreBoardRow> result = new ArrayList<>();
+        for (String player : players) {
+            ScoreBoardRow userScoreBoard = new ScoreBoardRow();
+            userScoreBoard.setPlayerName(player);
+            for(int i = 1; i <= 10; i++){
+                LastSlot lastSlot = new LastSlot();
+                if(i < 10){
+                    RegularSlot regularSlot = new RegularSlot();
+                    Integer firstShot = scoreHashMap.get(player+"-"+i+"-"+1);
+                    Integer secondShot = scoreHashMap.get(player+"-"+i+"-"+2);
+                    regularSlot.setFirstShot(firstShot != null ? firstShot :0);
+                    regularSlot.setSecondShot(secondShot != null ? secondShot: 0);
+                    regularSlot.setPositionSlot(i);
+                    userScoreBoard.addRegularSlot(regularSlot);
+                }else{
+                    Integer firstShot = scoreHashMap.get(player+"-"+i+"-"+1);
+                    Integer secondShot = scoreHashMap.get(player+"-"+i+"-"+2);
+                    Integer thirdShot = scoreHashMap.get(player+"-"+i+"-"+3);
+                    lastSlot.setFirstShot(firstShot != null ? firstShot :0);
+                    lastSlot.setSecondShot(secondShot != null ? secondShot: 0);
+                    lastSlot.setThirdShot(thirdShot != null ? thirdShot: 0);
+                    userScoreBoard.setLastSlot(lastSlot);
+                }
+            }
+            result.add(userScoreBoard);
+        }
+        return result;
+    }
+
+
 }

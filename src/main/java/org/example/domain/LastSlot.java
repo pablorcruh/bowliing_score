@@ -10,13 +10,6 @@ public class LastSlot {
 
     private int result;
 
-    public LastSlot(int firstShot, int secondShot, int thirdShot, int result) {
-        this.firstShot = firstShot;
-        this.secondShot = secondShot;
-        this.thirdShot = thirdShot;
-        this.result = result;
-    }
-
     public int getFirstShot() {
         return firstShot;
     }

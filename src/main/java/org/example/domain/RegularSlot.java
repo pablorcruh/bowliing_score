@@ -10,12 +10,6 @@ public class RegularSlot {
 
     private int result;
 
-    public RegularSlot(int firstShot, int secondShot, int positionSlot, int result) {
-        this.firstShot = firstShot;
-        this.secondShot = secondShot;
-        this.positionSlot = positionSlot;
-        this.result = result;
-    }
 
     public int getFirstShot() {
         return firstShot;
