@@ -1,8 +1,12 @@
 package org.example;
 
-import org.example.domain.LastSlot;
-import org.example.domain.RegularSlot;
 import org.example.domain.ScoreBoardRow;
+import org.example.domain.services.ICalculateScoreService;
+import org.example.domain.services.IFillScoreBoardService;
+import org.example.infrastructure.calculateBoardScore.CalculateScoreBoardClass;
+import org.example.infrastructure.calculateBoardScore.CalculateScoreBoardFactory;
+import org.example.infrastructure.fillBoardScore.FillBoardClass;
+import org.example.infrastructure.fillBoardScore.FillBoardClassFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,6 +19,13 @@ import java.util.*;
  */
 public class App 
 {
+    public  static FillBoardClass fillBoardClassFactory = new FillBoardClassFactory().generateBoardScore();
+    static IFillScoreBoardService fillService = fillBoardClassFactory.getFillScoreBoardService();
+
+    public static CalculateScoreBoardClass calculateScoreBoardClassFactory = new CalculateScoreBoardFactory().getCalculateScoreBoard();
+    static ICalculateScoreService calculateService = calculateScoreBoardClassFactory.getCalculateScoreService();
+
+
     static HashMap<String, Integer> scoreMap = new HashMap<>();
     static int turn = 0;
     static int shot = 1;
@@ -27,18 +38,18 @@ public class App
 
     public static void main( String[] args )
     {
+
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader("/Users/pablo.cruz/Documents/my_projects/bowling_score/src/main/java/org/example/score.txt"));
             String line = reader.readLine();
             while (line != null) {
-                //System.out.println(line);
                 fillScoreMap(line);
                 line = reader.readLine();
 
             }
-            List<ScoreBoardRow> result = fillScoreBoardRow(scoreMap, playersList);
-
+            List<ScoreBoardRow> result =  fillService.fillScoreBoardRow(scoreMap, playersList);
+            calculateService.calculateScoreBoardRow(result);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,35 +111,7 @@ public class App
         }
     }
 
-    public static List<ScoreBoardRow> fillScoreBoardRow(HashMap<String,Integer> scoreHashMap, Set<String> players){
-        List<ScoreBoardRow> result = new ArrayList<>();
-        for (String player : players) {
-            ScoreBoardRow userScoreBoard = new ScoreBoardRow();
-            userScoreBoard.setPlayerName(player);
-            for(int i = 1; i <= 10; i++){
-                LastSlot lastSlot = new LastSlot();
-                if(i < 10){
-                    RegularSlot regularSlot = new RegularSlot();
-                    Integer firstShot = scoreHashMap.get(player+"-"+i+"-"+1);
-                    Integer secondShot = scoreHashMap.get(player+"-"+i+"-"+2);
-                    regularSlot.setFirstShot(firstShot != null ? firstShot :0);
-                    regularSlot.setSecondShot(secondShot != null ? secondShot: 0);
-                    regularSlot.setPositionSlot(i);
-                    userScoreBoard.addRegularSlot(regularSlot);
-                }else{
-                    Integer firstShot = scoreHashMap.get(player+"-"+i+"-"+1);
-                    Integer secondShot = scoreHashMap.get(player+"-"+i+"-"+2);
-                    Integer thirdShot = scoreHashMap.get(player+"-"+i+"-"+3);
-                    lastSlot.setFirstShot(firstShot != null ? firstShot :0);
-                    lastSlot.setSecondShot(secondShot != null ? secondShot: 0);
-                    lastSlot.setThirdShot(thirdShot != null ? thirdShot: 0);
-                    userScoreBoard.setLastSlot(lastSlot);
-                }
-            }
-            result.add(userScoreBoard);
-        }
-        return result;
-    }
+
 
 
 }
