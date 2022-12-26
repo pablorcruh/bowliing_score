@@ -6,9 +6,7 @@ public class ScoreBoardRow {
 
     private String playerName;
 
-    private RegularSlot[] regularSlots = new RegularSlot[10];
-
-    private LastSlot lastSlot;
+    private RegularSlot[] regularSlots = new RegularSlot[11];
 
     public void addRegularSlot(RegularSlot regularSlot){
         this.regularSlots[regularSlot.getPositionSlot()] = regularSlot;
@@ -31,11 +29,4 @@ public class ScoreBoardRow {
         this.regularSlots = regularSlots;
     }
 
-    public LastSlot getLastSlot() {
-        return lastSlot;
-    }
-
-    public void setLastSlot(LastSlot lastSlot) {
-        this.lastSlot = lastSlot;
-    }
 }

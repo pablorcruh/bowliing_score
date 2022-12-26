@@ -6,6 +6,8 @@ public class RegularSlot {
 
     private int secondShot;
 
+    private int thirdShot;
+
     private int positionSlot;
 
     private int result;
@@ -25,6 +27,14 @@ public class RegularSlot {
 
     public void setSecondShot(int secondShot) {
         this.secondShot = secondShot;
+    }
+
+    public int getThirdShot() {
+        return thirdShot;
+    }
+
+    public void setThirdShot(int thirdShot) {
+        this.thirdShot = thirdShot;
     }
 
     public int getPositionSlot() {
