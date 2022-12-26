@@ -3,20 +3,19 @@ package org.example;
 import org.example.domain.ScoreBoardRow;
 import org.example.domain.services.ICalculateScoreService;
 import org.example.domain.services.IFillScoreBoardService;
+import org.example.domain.services.IPrintScoreBoardService;
 import org.example.infrastructure.calculateBoardScore.CalculateScoreBoardClass;
 import org.example.infrastructure.calculateBoardScore.CalculateScoreBoardFactory;
 import org.example.infrastructure.fillBoardScore.FillBoardClass;
 import org.example.infrastructure.fillBoardScore.FillBoardClassFactory;
+import org.example.infrastructure.printBoardService.PrintBoardClass;
+import org.example.infrastructure.printBoardService.PrintBoardClassFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public  static FillBoardClass fillBoardClassFactory = new FillBoardClassFactory().generateBoardScore();
@@ -24,6 +23,9 @@ public class App
 
     public static CalculateScoreBoardClass calculateScoreBoardClassFactory = new CalculateScoreBoardFactory().getCalculateScoreBoard();
     static ICalculateScoreService calculateService = calculateScoreBoardClassFactory.getCalculateScoreService();
+
+    public static PrintBoardClass printBoardClassFactory = new PrintBoardClassFactory().printBoardScore();
+    static IPrintScoreBoardService printService = printBoardClassFactory.getPrintScoreBoardService();
 
 
     static HashMap<String, Integer> scoreMap = new HashMap<>();
@@ -50,6 +52,7 @@ public class App
             }
             List<ScoreBoardRow> result =  fillService.fillScoreBoardRow(scoreMap, playersList);
             result = calculateService.calculateScoreBoardRow(result);
+            printService.printScoreBoardRow(result);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
