@@ -11,7 +11,8 @@ public class CalculateScoreService implements ICalculateScoreService {
         for (ScoreBoardRow row:scoreBoard) {
             int previousResult =0;
             int partialResult = 0;
-            for(int j = 1; j < 9; j++){
+            for(int j = 1; j <= 10; j++){
+
                 int value = row.getRegularSlots()[j].getFirstShot();
                 int complementValue = row.getRegularSlots()[j].getSecondShot();
                 if(value < 10){
@@ -26,9 +27,22 @@ public class CalculateScoreService implements ICalculateScoreService {
                     }
                 }
                 if(value == 10){
-                    int nextValue1 = row.getRegularSlots()[j+1].getFirstShot();
-                    int nextValue2 = row.getRegularSlots()[j+1].getSecondShot();
-                    partialResult = previousResult + 10 + nextValue1 + nextValue2;
+                    if(j <10){
+                        int nextValue2 = 0;
+                        int nextValue1 = row.getRegularSlots()[j+1].getFirstShot();
+                        if(nextValue1 == 10 && j < 9){
+                            nextValue2 = row.getRegularSlots()[j+2].getFirstShot();
+                        }else{
+                            nextValue2 = row.getRegularSlots()[j+1].getSecondShot();
+                        }
+                        partialResult = previousResult + 10 + nextValue1 + nextValue2;
+
+                    }else{
+                        int nextValue1 = row.getRegularSlots()[j].getFirstShot();
+                        int nextValue2 = row.getRegularSlots()[j].getSecondShot();
+                        int nextValue3 = row.getRegularSlots()[j].getThirdShot();
+                        partialResult = previousResult + nextValue1 + nextValue2 + nextValue3;
+                    }
                 }
                 row.getRegularSlots()[j].setResult(partialResult);
                 previousResult = partialResult;

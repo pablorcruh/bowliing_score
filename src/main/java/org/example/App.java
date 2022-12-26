@@ -49,7 +49,7 @@ public class App
 
             }
             List<ScoreBoardRow> result =  fillService.fillScoreBoardRow(scoreMap, playersList);
-            calculateService.calculateScoreBoardRow(result);
+            result = calculateService.calculateScoreBoardRow(result);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
