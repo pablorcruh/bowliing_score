@@ -9,7 +9,7 @@ This application is written in Java and uses some classes to
 represent the score board.
 
 In the project we use some basic dependency injection classes 
-to separate thw implementation from some services that we develop
+to separate the implementation from some services that we develop
 
 We develop three kind of services for this application.
 
@@ -17,7 +17,7 @@ We develop three kind of services for this application.
 * CalculateScoreService
 * PrintScoreBoardService
 
-The application is a Maven project but it has a maven wrapper 
+The application is a Maven project, but it has a maven wrapper 
 that helps execution if you don't have mvn installed.
 
 ## Execution
@@ -31,4 +31,22 @@ project folder at the same level of the pom.xml
 
 ```
 ./mvnw clean package exec:java -Dexec.mainClass="org.example.App" -Dexec.args="score.txt" 
+```
+
+If you don't have java installed in your machine we can use a container
+
+## Execution using Docker
+
+Build the container passing the name of the score file you 
+will use as a build argument
+
+```
+docker build -t score --build-arg SCORE_FILE=score.txt .
+```
+
+Once the container is build we execute the following command 
+to run the jar file inside the docker container
+
+```
+docker run --rm  --name score score
 ```
