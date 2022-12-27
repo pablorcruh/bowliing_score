@@ -14,6 +14,7 @@ import org.example.infrastructure.printBoardService.PrintBoardClassFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 public class App 
@@ -43,7 +44,9 @@ public class App
 
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("/Users/pablo.cruz/Documents/my_projects/bowling_score/src/main/java/org/example/score.txt"));
+            String pathfile =  args[0];
+            Path path = Path.of(pathfile).toAbsolutePath();
+            reader = new BufferedReader(new FileReader(path.toString()));
             String line = reader.readLine();
             while (line != null) {
                 fillScoreMap(line);
@@ -54,7 +57,7 @@ public class App
             result = calculateService.calculateScoreBoardRow(result);
             printService.printScoreBoardRow(result);
             reader.close();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
