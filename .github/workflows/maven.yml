@@ -45,6 +45,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: jar-artifact
+        path: target/
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
