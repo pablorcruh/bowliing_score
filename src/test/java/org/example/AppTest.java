@@ -1,8 +1,5 @@
 package org.example;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.example.domain.ScoreBoardRow;
 import org.example.domain.services.ICalculateScoreService;
 import org.example.domain.services.IFillScoreBoardService;
@@ -11,9 +8,10 @@ import org.example.infrastructure.calculateBoardScore.CalculateScoreBoardFactory
 import org.example.infrastructure.fillBoardScore.FillBoardClass;
 import org.example.infrastructure.fillBoardScore.FillBoardClassFactory;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -21,7 +19,6 @@ import java.util.*;
  */
 
 public class AppTest
-    extends TestCase
 {
 
     public FillBoardClass fillBoardClassFactory = new FillBoardClassFactory().generateBoardScore();
@@ -59,21 +56,6 @@ public class AppTest
 
         result = fillService.fillScoreBoardRow(scoreMap, playerList);
 
-    }
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
     }
 
     @org.junit.jupiter.api.Test
