@@ -52,6 +52,9 @@ docker push pablorcruh/bowling-score:latest
 Once the container is build we execute the following command 
 to run the jar file inside the docker container
 
+If you don't have java installed you need docker running in your machine.
+We will use a docker container to run the application
+
 ```
 docker run --rm  --name score pablorcruh/bowling-score
 ```
