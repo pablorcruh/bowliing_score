@@ -30,3 +30,9 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+    - name: Save Maven artifact
+    - uses: actions/upload-artifact@v3
+      with:
+        name: jar-artifact
+        path: ${{ github.workspace }}/target/*.jar
+        retention-days: 1
