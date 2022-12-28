@@ -43,12 +43,11 @@ will use as a build argument
 ```
 docker build -t pablorcruh/bowling-score --build-arg SCORE_FILE=score.txt .
 ```
-
+The image is pushed to a public repository to be downloaded and used
 
 ```
 docker push pablorcruh/bowling-score:latest
 ```
-
 
 Once the container is build we execute the following command 
 to run the jar file inside the docker container
