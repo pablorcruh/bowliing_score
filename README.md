@@ -41,12 +41,18 @@ Build the container passing the name of the score file you
 will use as a build argument
 
 ```
-docker build -t score --build-arg SCORE_FILE=score.txt .
+docker build -t pablorcruh/bowling-score --build-arg SCORE_FILE=score.txt .
 ```
+
+
+```
+docker push pablorcruh/bowling-score:latest
+```
+
 
 Once the container is build we execute the following command 
 to run the jar file inside the docker container
 
 ```
-docker run --rm  --name score score
+docker run --rm  --name score pablorcruh/bowling-score
 ```
