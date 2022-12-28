@@ -45,15 +45,13 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: jar-artifact
-    - name: Docker build
-      run: |
-        docker build . -t pablocruh/bowling-score:${{needs.build.outputs.jar_version}}
     - name: Login to DockerHub
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
-    - name: Docker push
-      run: |
-        docker push pablorcruh/bowling-score:${{needs.build.outputs.jar_version}}
-
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: pablorcruh/bowling-score:latest
